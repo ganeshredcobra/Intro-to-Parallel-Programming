@@ -30,10 +30,12 @@ Output array is square of input array.
 Output: Float Array  [0^2  ,1^2 ,3 ^2 ,......... ,63^2]
 
 ###CPU code to square each element in an array
+```c
 	for(i=0; i < 64; i++)
 	{
 		out[i] = in[i] * in[i];
 	}
+```
 - Only one thread is involved
 - No parallelism involved
 - Total 64 Multiplication will be done
@@ -58,7 +60,7 @@ It has two parts
 	- cpu code : squarekernel<<<64>>> (outarray,inarray)
 	- launches 64 threads
 ###CUDA Program to square
-
+```
 	#include <stdio.h>
 	
 	__global__ void square(float *d_out , float *d_in)
@@ -112,7 +114,7 @@ It has two parts
 	return 0;
 	
 	} //end of main		
-
+```
 CUDA Convention:
 ---------------------
 Naming varibales like this avoids error and differentiates CPU and GPU variables.
@@ -133,18 +135,19 @@ The fourth parameter cudaMemcpyHostToDevice defines to copy from host to device 
 - The arguments to the kernel are two pointer d_in and d_out.
 - This tell CPU to launch 64 kernels on GPU on 64 threads.
 ------
+```
 	__global__ void square(float *d_out , float *d_in)
 	{
 		int idx = threadIdx.x;
 		float f = d_in[idx];
 		d_out[idx] = f * f ;
 	}
-	
+```	
 - ** ___global__ **  is the keyword by which the CUDA knows this is a kernel code.
 - **int idx = threadIdx.x;**  - Each thread knows its ID. CUDA has an inbuilt variable called threadId
 
 ###CUDA Program to get cube of array
-
+```
 	#include <stdio.h>
 	
 	__global__ void cube(float *d_out , float *d_in)
@@ -198,7 +201,7 @@ The fourth parameter cudaMemcpyHostToDevice defines to copy from host to device 
 	return 0;
 	
 	} //end of main
-	
+```	
 Command to compile code
 -------
 
@@ -260,7 +263,7 @@ I = .299f * R + .587f * G + 	.114f  * B
 
 CUDA progrmColor to Greyscale Conversion
 --------------------
-
+```
 	// Homework 1
 	// Color to Greyscale Conversion
 	
@@ -335,5 +338,5 @@ CUDA progrmColor to Greyscale Conversion
 	  
 	  cudaDeviceSynchronize(); checkCudaErrors(cudaGetLastError());
 	}
-	
+```	
 	
