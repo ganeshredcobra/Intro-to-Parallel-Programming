@@ -27,3 +27,22 @@ How many times a given input value be read  when applying each stencil?
 - 2D Moore Stencil - 9
 - 3D Von Neumann - 7
 ![stencil](IMG/stencil.png  "stencil"){ width=40% }
+
+Transpose
+--------------
+
+Suppose you have a 2D image
+
+![stencil](IMG/2dimage.png  "stencil"){ width=30% }
+
+It is laid out in a row major order. This means that the elements of the array or the pixels of the image is laid out one row at a time.
+
+![stencil](IMG/rowmajor.png  "stencil"){ width=90% }
+
+But if you want to do some operations column wise like this
+
+![stencil](IMG/column.png  "stencil"){ width=20% }
+
+For this we need to do an operation to reorder the elements like scatter operation. Each thread is reading from adjacent element in array but writing to some place scatterd in memeory according to row column transpose 2D iamge.
+
+![stencil](IMG/transpose.png  "stencil"){ width=90% }
