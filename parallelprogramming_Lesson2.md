@@ -46,3 +46,48 @@ But if you want to do some operations column wise like this
 For this we need to do an operation to reorder the elements like scatter operation. Each thread is reading from adjacent element in array but writing to some place scatterd in memeory according to row column transpose 2D iamge.
 
 ![stencil](IMG/transpose.png  "stencil"){ width=90% }
+
+Transpose opeartions comes when we are doing array,matrix or image operations.The concept is applicable to generally all kind of data structures.
+
+An example
+
+```c
+	struct foo{
+		float f;
+		int i;
+	};
+```
+
+so how an array of structures will look in this memory
+
+```c
+	foo array[1000];
+```
+![stencil](IMG/foo.png  "stencil"){ width=90% }
+
+So if we are accessing all of the floats to do some operation then it is efficient to get them all continously.
+![stencil](IMG/SOA.png  "stencil"){ width=90% }
+
+Array Of Structures - AOS
+Structure Of Arrays - SOA
+
+So transpose operation tasks reorder data elements memory.
+
+Quiz  - Label code snipets by pattern
+--------------
+```c
+	float out[],in[];
+	int i = threadIdx.x;
+	int j = threadIdx.y;
+	
+	const float pi = 3.1415;
+	
+	out[i] = pi * in[i];
+	out[i + j*128] = in[j + i*128];
+	
+	if(i%2){
+		out[i-1] += pi*in[i]; out[i+1] += pi*in[i];
+		out[i] = (in[i] + in[i+1] + in[i-1]) * pi/3.0f;
+	
+	}
+```
